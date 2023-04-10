@@ -28,7 +28,7 @@ public class ConsultaEnderecoService {
 
     public Object getEnderecoViaCepAPI(ConsultaEndereco consultaEndereco){
         if(consultaEndereco.cepEhValido()){
-            String objetoJsonString = consumoApiServicen.consumirAPIMetodoGet(apiViaCepURL + consultaEndereco.getCep() + "/json/");
+            String objetoJsonString = consumoApiServicen.consumirAPIMetodoGet(apiViaCepURL + consultaEndereco.getCep() + "/json");
             try{
                 return tratarObjetoRetornado(objetoJsonString, consultaEndereco.getCep());
             }catch (IOException ioEx){
@@ -49,6 +49,7 @@ public class ConsultaEnderecoService {
             throw new RecursoNaoEncontrado("Nenhum endereço encontrado para o CEP [ " + cep + " ]");
         else{
             EnderecoViaCep enderecoViaCep = objectMapper.readValue(objetoJsonString, EnderecoViaCep.class);
+            System.out.println("%%%%%%%%%" + enderecoViaCep);
             return new Endereco(enderecoViaCep, new CalculoDeFreteRegiaoProps());
         }
     }
