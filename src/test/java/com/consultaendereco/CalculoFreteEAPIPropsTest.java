@@ -1,11 +1,23 @@
 package com.consultaendereco;
 
+import com.consultaendereco.annotation.EnabledIfProdProfile;
 import com.consultaendereco.model.frete.CalculoDeFretePorUF;
 import com.consultaendereco.model.frete.CalculoDeFreteRegiaoProps;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.*;
@@ -14,7 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CalculoFreteEAPIPropsTest {
 
     @Value("${regiao.centroOeste}")
@@ -83,6 +97,7 @@ public class CalculoFreteEAPIPropsTest {
 
 
     @Test
+    @DisplayName("Valor de frete para estados da região Centro-Oeste")
     public void valorFreteRegiaoCentroOestePorEstados(){
         assertEquals(Float.parseFloat(centroOeste), calculoFretePorUF.getValorFrete("DF"));
         assertEquals(Float.parseFloat(centroOeste), calculoFretePorUF.getValorFrete("GO"));
@@ -91,6 +106,7 @@ public class CalculoFreteEAPIPropsTest {
     }
 
     @Test
+    @DisplayName("Valor de frete para estados da região Nordeste")
     public void valorFreteRegiaoNordestePorEstados(){
         assertEquals(Float.parseFloat(nordeste), calculoFretePorUF.getValorFrete("AL"));
         assertEquals(Float.parseFloat(nordeste), calculoFretePorUF.getValorFrete("BA"));
@@ -104,6 +120,7 @@ public class CalculoFreteEAPIPropsTest {
     }
 
     @Test
+    @DisplayName("Valor de frete para estados da região Norte")
     public void valorFreteRegiaoNortePorEstados(){
         assertEquals(Float.parseFloat(norte), calculoFretePorUF.getValorFrete("AC"));
         assertEquals(Float.parseFloat(norte), calculoFretePorUF.getValorFrete("AM"));
@@ -115,6 +132,7 @@ public class CalculoFreteEAPIPropsTest {
     }
 
     @Test
+    @DisplayName("Valor de frete para estados da região Sudeste")
     public void valorFreteRegiaoSudestePorEstados(){
         assertEquals(Float.parseFloat(sudeste), calculoFretePorUF.getValorFrete("ES"));
         assertEquals(Float.parseFloat(sudeste), calculoFretePorUF.getValorFrete("MG"));
@@ -123,6 +141,7 @@ public class CalculoFreteEAPIPropsTest {
     }
 
     @Test
+    @DisplayName("Valor de frete para estados da região Sul")
     public void valorFreteRegiaoSulPorEstados(){
         assertEquals(Float.parseFloat(sul), calculoFretePorUF.getValorFrete("PR"));
         assertEquals(Float.parseFloat(sul), calculoFretePorUF.getValorFrete("SC"));
@@ -135,15 +154,17 @@ public class CalculoFreteEAPIPropsTest {
     }
 
     @Test
+    @DisplayName("Validar estrutura da API URL")
     public void apiViaCepURLStructure() throws URISyntaxException {
         URI uri = new URI(apiViaCepURL);
         assertNotNull(uri.getHost());
     }
 
     @Test
+    @DisplayName("Validar conexão API URL")
     public void conaxaoApiViaCepURl() throws MalformedURLException, IOException {
         HttpURLConnection connection = (HttpURLConnection) (new URL(apiViaCepURL)).openConnection();
-        assertNotNull(connection.getResponseCode());
+        assertTrue(connection.getResponseCode() < 500);
         connection.disconnect();
     }
 
