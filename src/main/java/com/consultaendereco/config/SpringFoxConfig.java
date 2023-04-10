@@ -1,9 +1,5 @@
 package com.consultaendereco.config;
 
-import com.consultaendereco.model.endereco.ConsultaEndereco;
-import com.consultaendereco.model.endereco.Endereco;
-import com.fasterxml.classmate.TypeResolver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -19,8 +15,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SpringFoxConfig extends WebMvcConfigurationSupport {
 
-    @Autowired
-    private TypeResolver typeResolver;
+    // @Autowired
+    // private TypeResolver typeResolver;
 
     @Bean
     public Docket greetingApi() {
@@ -29,16 +25,14 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.consultaendereco"))
                 .build()
-                .additionalModels(typeResolver.resolve(Endereco.class))
-                .additionalModels(typeResolver.resolve(ConsultaEndereco.class))
                 .apiInfo(metaData());
     }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Spring Boot REST API")
-                .description("\"Spring Boot REST API para consulta de endereço\"")
-                .version("1.0.0")
+                .description("\"Spring Boot REST API para consulta de endereço e cálculo de frete\"")
+                .version("0.0.1-SNAPSHOT")
                 .build();
     }
 

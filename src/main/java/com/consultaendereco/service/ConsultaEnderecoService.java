@@ -49,7 +49,6 @@ public class ConsultaEnderecoService {
             throw new RecursoNaoEncontrado("Nenhum endereço encontrado para o CEP [ " + cep + " ]");
         else{
             EnderecoViaCep enderecoViaCep = objectMapper.readValue(objetoJsonString, EnderecoViaCep.class);
-            System.out.println("%%%%%%%%%" + enderecoViaCep);
             return new Endereco(enderecoViaCep, new CalculoDeFreteRegiaoProps());
         }
     }

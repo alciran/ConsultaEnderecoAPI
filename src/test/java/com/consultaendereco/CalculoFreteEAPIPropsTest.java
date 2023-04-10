@@ -1,24 +1,12 @@
 package com.consultaendereco;
 
-import com.consultaendereco.annotation.EnabledIfProdProfile;
 import com.consultaendereco.model.frete.CalculoDeFretePorUF;
 import com.consultaendereco.model.frete.CalculoDeFreteRegiaoProps;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.net.*;
 
@@ -26,9 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Slf4j
+
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 public class CalculoFreteEAPIPropsTest {
 
     @Value("${regiao.centroOeste}")
