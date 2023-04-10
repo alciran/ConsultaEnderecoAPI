@@ -1,4 +1,4 @@
-package com.consultaendereco.model;
+package com.consultaendereco.model.frete;
 
 import com.consultaendereco.config.ValorFreteRegiao;
 import com.consultaendereco.exception.ExcecaoTratadaParaRespostaHttp;
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 @Slf4j
-public class CalculoDeFreteRegiaoProps implements CalculoDeFretePorUF{
+public class CalculoDeFreteRegiaoProps implements CalculoDeFretePorUF {
 
     @Override
     public float getValorFrete(String uf) {
