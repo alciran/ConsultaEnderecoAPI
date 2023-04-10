@@ -52,4 +52,5 @@ public class EstruturaAtributoCepTest {
         assertEquals("01001000", consultaEndereco.getCepSemMascara());
         assertEquals("01001-000", consultaEndereco.getCep());
     }
+
 }

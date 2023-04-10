@@ -1,17 +1,21 @@
 package com.consultaendereco;
 
-import com.consultaendereco.model.CalculoDeFretePorUF;
-import com.consultaendereco.model.CalculoDeFreteRegiaoProps;
+import com.consultaendereco.model.frete.CalculoDeFretePorUF;
+import com.consultaendereco.model.frete.CalculoDeFreteRegiaoProps;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.IOException;
+import java.net.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CalculoFreteRegiaoPropsTest {
+public class CalculoFreteEAPIPropsTest {
 
     @Value("${regiao.centroOeste}")
     private String centroOeste;
@@ -27,6 +31,9 @@ public class CalculoFreteRegiaoPropsTest {
 
     @Value("${regiao.sul}")
     private String sul;
+
+    @Value("${api.viacep.url}")
+    private String apiViaCepURL;
 
     private CalculoDeFretePorUF calculoFretePorUF = new CalculoDeFreteRegiaoProps();
 
@@ -120,6 +127,24 @@ public class CalculoFreteRegiaoPropsTest {
         assertEquals(Float.parseFloat(sul), calculoFretePorUF.getValorFrete("PR"));
         assertEquals(Float.parseFloat(sul), calculoFretePorUF.getValorFrete("SC"));
         assertEquals(Float.parseFloat(sul), calculoFretePorUF.getValorFrete("RS"));
+    }
+
+    @Test
+    public void apiViaCepURlPropriedadeTeste(){
+        assertTrue(!apiViaCepURL.isEmpty());
+    }
+
+    @Test
+    public void apiViaCepURLStructure() throws URISyntaxException {
+        URI uri = new URI(apiViaCepURL);
+        assertNotNull(uri.getHost());
+    }
+
+    @Test
+    public void conaxaoApiViaCepURl() throws MalformedURLException, IOException {
+        HttpURLConnection connection = (HttpURLConnection) (new URL(apiViaCepURL)).openConnection();
+        assertNotNull(connection.getResponseCode());
+        connection.disconnect();
     }
 
 }
