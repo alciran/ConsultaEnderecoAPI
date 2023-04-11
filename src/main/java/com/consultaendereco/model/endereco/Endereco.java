@@ -1,6 +1,8 @@
 package com.consultaendereco.model.endereco;
 
 import com.consultaendereco.model.frete.CalculoDeFretePorUF;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,7 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("Endereco")
-public class Endereco extends ConsultaEndereco{
+public class Endereco{
+
+    @ApiModelProperty(name = "Cep", position = 0, example = "01001-000")
+    private String cep;
 
     @ApiModelProperty(name = "Rua", position = 1, example = "Praça da Sé")
     private String rua ;
@@ -41,6 +46,20 @@ public class Endereco extends ConsultaEndereco{
         this.setCidade(enderecoViaCep.getLocalidade());
         this.setEstado(enderecoViaCep.getUf());
         this.setFrete(calculoFretePorUF.getValorFrete(this.getEstado()));
+    }
+
+    @JsonIgnore
+    public String getCepSemMascara(){
+        return this.cep.replace("-", "");
+    }
+
+    public String getCep(){
+        if(this.cep.contains("-"))
+            return this.cep;
+        else{
+            String cepComMascara = this.cep.substring(0, 5) + "-" + this.cep.substring(5);
+            return cepComMascara;
+        }
     }
 
 }

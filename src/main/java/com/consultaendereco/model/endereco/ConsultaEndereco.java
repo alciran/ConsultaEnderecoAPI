@@ -18,7 +18,7 @@ public class ConsultaEndereco {
     @NotNull(message = "Atributo [ cep ] não pode ser nulo!")
     @NotEmpty(message = "Atributo [ cep ] não pode ser vazio!")
     @Size(min=8, max=9, message = "Tamanho atributo [ cep ] deve ser entre 8 caracteres ou 9 caracteres com máscara!")
-    @ApiModelProperty(name = "Cep", position = 0, example = "01001-000")
+    @ApiModelProperty(name = "Cep", position = 0, example = "01001-000", required = true)
     private String cep;
 
     public boolean cepEhValido(){

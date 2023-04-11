@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EnderecoViaCep extends ConsultaEndereco {
+public class EnderecoViaCep {
 
+    private String cep;
     private String logradouro;
     private String complemento;
     private String bairro;
